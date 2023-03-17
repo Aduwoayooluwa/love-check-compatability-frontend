@@ -6,7 +6,6 @@ import TextField from '@mui/material/TextField';
 import Image from 'next/image';
 import Box from '@mui/material/Box';
 import { Button, FormControl, InputLabel, Select, MenuItem } from '@mui/material';
-import Partner from './Partner';
 
 
 
@@ -22,7 +21,7 @@ const getter = (url: string) => axios.get(url, {
 }
 ).then((response) => response.data)
 
-const Books = ({  }: Props) => {
+const Partner = ({  }: Props) => {
 
     const url = ``
     const { data, error, isLoading } = useSWR(url, getter)
@@ -35,9 +34,9 @@ const Books = ({  }: Props) => {
     }
 
     return (
-        <main className='w-full grid place-items-center mt-20'>
-            <div className='p-5 md:p-8 grid place-items-center shadow border w-full  md:w-1/2'>
-                <p className='font-semibold text-xl mb-3'>Enter your Personal Information</p>
+        <main className='w-full grid place-items-center mt-7'>
+            <div className='p-5 grid place-items-center shadow border w-full md:w-1/2'>
+                <p className='font-semibold text-xl mb-3'>Partner Details</p>
             <Box sx={{ width: "100%", maxWidth: '100%',}}>
 
                 <FormControl fullWidth>
@@ -52,16 +51,15 @@ const Books = ({  }: Props) => {
                         <TextField required fullWidth label="Zodiac Sign" id="fullWidth" />
                         <span className="my-3"></span>
                         <TextField required fullWidth label="Email" id="fullWidth" />
+                        <span className="my-3"></span>
+                        <Button variant="outlined">Check Compatability</Button>
                 </FormControl>
             </Box>
-            
                 
         </div>
-
-        <Partner />
         </main>
         
     )
 }
 
-export default Books
+export default Partner
