@@ -1,16 +1,34 @@
 import React, { useState } from 'react'
 import axios from 'axios'
-import useSWR from 'swr'
+import Backdrop from '@mui/material/Backdrop';
 import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
 import { Button, FormControl, InputLabel, Select, MenuItem } from '@mui/material';
-import { set } from 'mongoose';
+import Typography from '@mui/material/Typography';
+import Modal from '@mui/material/Modal';
+import Fade from '@mui/material/Fade';
+import { MessageChannel } from 'worker_threads';
 
 type Props = {}
 
-const fetcher = (url:string) => axios.get(url).then((response) => response.data)
+const style = {
+    position: 'absolute' as 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: 400,
+    bgcolor: 'background.paper',
+    border: '2px solid #000',
+    boxShadow: 24,
+    p: 4,
+    fontWeight: 600,
+};
+
 
 const Zodiac = (props: Props) => {
+    const [title, setTitle] = useState("")
+    const [message, setMessage] = useState("")
+    
     const [inputField, setInputField] = React.useState({
         mName: "",
         pName: "",
@@ -19,9 +37,7 @@ const Zodiac = (props: Props) => {
     })
 
     const [open, setopen] = useState(false)
-    
-
-    const [shouldFetch, setShouldFetch] = useState<boolean>(false)
+    const handleClose = () => setopen(false);
 
     const mName = inputField.mName
     const pName = inputField.pName
@@ -37,13 +53,19 @@ const Zodiac = (props: Props) => {
 
     const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
         console.log(inputField)
-        setInputField({
-            mName: "",
-            pName: "",
-            mZodiac: "",
-            pZodiac: ""
-        })
-        return axios.get(url).then((response) => response.data)
+
+        try {
+                return axios.get(url).then((response) => {
+                console.log(response)
+                setMessage(response.data.message)
+                setTitle(response.data.title)
+                setopen(true)
+            })
+        }
+        catch (error) {
+            console.log(error)
+        }
+        
     }
 
     // const { data: check, error, isLoading } = useSWR(shouldFetch ? null : url, fetcher)
@@ -76,7 +98,30 @@ const Zodiac = (props: Props) => {
                 </Box>
             </section>
             
-                
+            <Modal
+                    aria-labelledby="transition-modal-title"
+                    aria-describedby="transition-modal-description"
+                    open={open}
+                    onClose={handleClose}
+                    closeAfterTransition
+                    slots={{ backdrop: Backdrop }}
+                    slotProps={{
+                    backdrop: {
+                        timeout: 500,
+                    },
+                    }}
+                >
+                    <Fade in={open}>
+                    <Box sx={style}>
+                        <Typography id="transition-modal-title" variant="h6" component="h1">
+                            {title}
+                        </Typography>
+                        <Typography id="transition-modal-description" variant='subtitle1'  sx={{ mt: 2 }}>
+                                {message}
+                        </Typography>
+                    </Box>
+                    </Fade>
+                </Modal>   
         </div>
         </main>
     )
