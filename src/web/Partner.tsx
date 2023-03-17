@@ -44,13 +44,13 @@ const Partner = ({  }: Props) => {
                         <span className="my-3"></span>
                         <TextField required fullWidth label="Last Name" id="fullWidth" />
                         <span className="my-3"></span>
-                        <TextField required fullWidth label="Your Age" id="fullWidth" />
+                        <TextField type="number" required fullWidth label="Your Age" id="fullWidth" />
                         <span className="my-3"></span>
                         <TextField required fullWidth label="Month of Birth" id="fullWidth" />
                         <span className="my-3"></span>
                         <TextField required fullWidth label="Zodiac Sign" id="fullWidth" />
                         <span className="my-3"></span>
-                        <TextField required fullWidth label="Email" id="fullWidth" />
+                        <TextField type="email" required fullWidth label="Email" id="fullWidth" />
                         <span className="my-3"></span>
                         <Button variant="outlined">Check Compatability</Button>
                 </FormControl>
