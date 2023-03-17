@@ -4,6 +4,7 @@ import { Inter } from 'next/font/google'
 import styles from '@/styles/Home.module.css'
 import Navigation from '@/Layout/AppBar'
 import Books from '@/web/Books'
+import Zodiac from '@/web/Zodiac'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -19,7 +20,7 @@ export default function Home() {
       <main className='w-full'>
         <Navigation />
 
-        <Books/>
+        <Zodiac />
 
 
       </main>
