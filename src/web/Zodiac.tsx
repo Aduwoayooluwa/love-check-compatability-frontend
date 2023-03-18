@@ -44,7 +44,7 @@ const Zodiac = (props: Props) => {
     const mZodiac = inputField.mZodiac
     const pZodiac = inputField.pZodiac
     
-    const url=`http://localhost:5000/love/${mName}/${mZodiac}/${pName}/${pZodiac}`
+    const url=`${process.env.NEXT_PUBLIC_BASE_URI}/love/${mName}/${mZodiac}/${pName}/${pZodiac}`
 
     const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { value, name } = e.target
