@@ -119,7 +119,7 @@ const Zodiac = (props: Props) => {
                             <span className="my-3"></span>
                             
                     </FormControl>
-                    <Button  onClick={(event: React.MouseEvent<HTMLButtonElement>) => handleClick(event)} variant='outlined' fullWidth>Check Compatability</Button>
+                    <Button  onClick={(event: React.MouseEvent<HTMLButtonElement>) => handleClick(event)} variant='outlined' fullWidth>Check Compatibility</Button>
                 </Box>
             </section>
             
