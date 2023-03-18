@@ -1,13 +1,10 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import axios from 'axios'
-import Backdrop from '@mui/material/Backdrop';
 import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
 import { Button, FormControl, InputLabel, Select, MenuItem } from '@mui/material';
-import Typography from '@mui/material/Typography';
-import Modal from '@mui/material/Modal';
-import Fade from '@mui/material/Fade';
-import { MessageChannel } from 'worker_threads';
+import { ModalContext} from '@/context/ModalContext';
+
 
 type Props = {}
 
@@ -25,9 +22,9 @@ const style = {
 };
 
 
-const Zodiac = (props: Props) => {
-    const [title, setTitle] = useState("")
-    const [message, setMessage] = useState("")
+const Zodiac = (props: Props) => {   
+
+    const { setIsMessageOpen, setPname, setMname, setIsModalOpen, setModalTitle, setModalMessage } = useContext(ModalContext)
     
     const [inputField, setInputField] = React.useState({
         mName: "",
@@ -35,9 +32,6 @@ const Zodiac = (props: Props) => {
         mZodiac: "",
         pZodiac: ""
     })
-
-    const [open, setopen] = useState(false)
-    const handleClose = () => setopen(false);
 
     const mName = inputField.mName
     const pName = inputField.pName
@@ -57,9 +51,16 @@ const Zodiac = (props: Props) => {
         try {
                 return axios.get(url).then((response) => {
                 console.log(response)
-                setMessage(response.data.message)
-                setTitle(response.data.title)
-                setopen(true)
+                setModalMessage(response.data.message)
+                setModalTitle(response.data.title)
+                setIsMessageOpen(true)
+                setIsModalOpen((prev: boolean) => !prev)
+                setMname(inputField.mName)
+                setPname(inputField.pName)
+
+                if (response.data.compatibility === true) {
+
+                }
             })
         }
         catch (error) {
@@ -98,30 +99,6 @@ const Zodiac = (props: Props) => {
                 </Box>
             </section>
             
-            <Modal
-                    aria-labelledby="transition-modal-title"
-                    aria-describedby="transition-modal-description"
-                    open={open}
-                    onClose={handleClose}
-                    closeAfterTransition
-                    slots={{ backdrop: Backdrop }}
-                    slotProps={{
-                    backdrop: {
-                        timeout: 500,
-                    },
-                    }}
-                >
-                    <Fade in={open}>
-                    <Box sx={style}>
-                        <Typography id="transition-modal-title" variant="h6" component="h1">
-                            {title}
-                        </Typography>
-                        <Typography id="transition-modal-description" variant='subtitle1'  sx={{ mt: 2 }}>
-                                {message}
-                        </Typography>
-                    </Box>
-                    </Fade>
-                </Modal>   
         </div>
         </main>
     )
