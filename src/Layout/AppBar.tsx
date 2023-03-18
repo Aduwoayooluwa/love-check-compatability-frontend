@@ -71,7 +71,7 @@ export default function Navigation() {
                 component="div"
                 sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
             >
-                COMPATABILITY CHECKER
+                COMPATIBILITY CHECKER
             </Typography>
             </Toolbar>
         </AppBar>

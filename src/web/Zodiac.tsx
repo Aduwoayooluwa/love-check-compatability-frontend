@@ -99,7 +99,7 @@ const Zodiac = (props: Props) => {
             }
                 
             <div className='p-5 grid place-items-center shadow-none md:shadow border-none md:border w-full md:w-1/2'>
-                <p className='font-semibold text-xl mb-3'>Check your Love Compatability</p>
+                <p className='font-semibold text-xl mb-3'>Check your Love Compatibility</p>
 
             <section className='flex items-center justify-evenly'>
                 <Box sx={{ width: "100%", maxWidth: '100%', flex:"inline"}}>
