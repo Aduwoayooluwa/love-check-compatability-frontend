@@ -1,12 +1,15 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useState, useEffect } from 'react'
 import axios from 'axios'
 import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
 import { Button, FormControl, InputLabel, Select, MenuItem } from '@mui/material';
 import { ModalContext} from '@/context/ModalContext';
-
+import dynamic from 'next/dynamic';
+import useWindowSize from 'react-use/lib/useWindowSize'
+import Confetti from 'react-confetti'
 
 type Props = {}
+
 
 const style = {
     position: 'absolute' as 'absolute',
@@ -23,8 +26,9 @@ const style = {
 
 
 const Zodiac = (props: Props) => {   
+    const { width, height } = useWindowSize()
 
-    const { setIsMessageOpen, setPname, setMname, setIsModalOpen, setModalTitle, setModalMessage } = useContext(ModalContext)
+    const { setIsMessageOpen, setPname, setMname, setIsModalOpen, setModalTitle, setModalMessage, setErrorTitle, setErrorMessage, setIsErrorOpen } = useContext(ModalContext)
     
     const [inputField, setInputField] = React.useState({
         mName: "",
@@ -32,6 +36,8 @@ const Zodiac = (props: Props) => {
         mZodiac: "",
         pZodiac: ""
     })
+
+    const [showConfetti, setShowConfetti] = useState(false)
 
     const mName = inputField.mName
     const pName = inputField.pName
@@ -58,22 +64,40 @@ const Zodiac = (props: Props) => {
                 setMname(inputField.mName)
                 setPname(inputField.pName)
 
-                if (response.data.compatibility === true) {
+                if (response.data.compatability === true) {
+                    console.log('status', response.data.compatability)
+                    setShowConfetti(true)
+                    return
+                }
 
+                else if (response.data.compatability === false) {
+                    console.log('status', response.data.compatability)
+                    setShowConfetti(false)
+                    return 
                 }
             })
         }
-        catch (error) {
+        catch (error: any) {
             console.log(error)
+            setErrorMessage(error.message)
+            setErrorTitle('')
+            setIsErrorOpen(true)
+            setIsModalOpen((prev: boolean) => !prev)
         }
         
     }
 
-    // const { data: check, error, isLoading } = useSWR(shouldFetch ? null : url, fetcher)
-    //console.log(check)
-
     return (
         <main className='w-full grid place-items-center mt-7'>
+            {
+                showConfetti && (
+                    <Confetti
+                        width={width}
+                        height={height}
+                    />
+                )
+            }
+                
             <div className='p-5 grid place-items-center shadow-none md:shadow border-none md:border w-full md:w-1/2'>
                 <p className='font-semibold text-xl mb-3'>Check your Love Compatability</p>
 
@@ -95,7 +119,7 @@ const Zodiac = (props: Props) => {
                             <span className="my-3"></span>
                             
                     </FormControl>
-                    <Button onClick={(event: React.MouseEvent<HTMLButtonElement>) => handleClick(event)} variant='outlined' fullWidth>Check Compatability</Button>
+                    <Button  onClick={(event: React.MouseEvent<HTMLButtonElement>) => handleClick(event)} variant='outlined' fullWidth>Check Compatability</Button>
                 </Box>
             </section>
             

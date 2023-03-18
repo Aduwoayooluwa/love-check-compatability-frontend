@@ -1,3 +1,4 @@
+import Error from "@/Layout/Error";
 import Message from "@/Layout/Message";
 import { BlurModal } from "@/container/Modal";
 import React, { createContext, useState } from "react";
@@ -11,7 +12,9 @@ const ModalProvider = ({ children }) => {
     const [modalTitle, setModalTitle] = useState("")
     const [mName, setMname] = useState("")
     const [pName, setPname] = useState("")
-
+    const [errorTitle, setErrorTitle] = useState("")
+    const [errorMessage, setErrorMessage] = useState("")
+    const [isErrorOpen, setIsErrorOpen] = useState(false)
     return (
         <ModalContext.Provider value={{
             isModalOpen, setIsModalOpen, isMessageOpen, 
@@ -19,7 +22,10 @@ const ModalProvider = ({ children }) => {
             modalMessage, setModalMessage,
             modalTitle, setModalTitle,
             mName, setMname,
-            pName, setPname
+            pName, setPname,
+            errorTitle, setErrorTitle,
+            errorMessage, setErrorMessage,
+            isErrorOpen, setIsErrorOpen
         }}>
             <BlurModal
                     isModalOpen={isMessageOpen}
@@ -28,6 +34,15 @@ const ModalProvider = ({ children }) => {
                         setIsModalOpen(false)
                     }}>
                         <Message mName={mName} pName={pName} title={modalTitle} message={modalMessage}/>
+                    </BlurModal>
+
+                    <BlurModal
+                    isModalOpen={isErrorOpen}
+                    onClose={() => {
+                        setIsErrorOpen(false)
+                        setIsModalOpen(false)
+                    }}>
+                        <Error title={errorTitle} message={errorMessage}/>
                     </BlurModal>
             { children }
         </ModalContext.Provider>
