@@ -53,7 +53,7 @@ const Zodiac = (props: Props) => {
     const mZodiac = inputField.mZodiac
     const pZodiac = inputField.pZodiac
     
-    const url=`https://love-compatability-backend.onrender.com/love/${mName}/${mZodiac}/${pName}/${pZodiac}`
+    const url=`${process.env.NEXT_PUBLIC_BASE_URI}/love/${mName}/${mZodiac}/${pName}/${pZodiac}`
 
     const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { value, name } = e.target
