@@ -126,7 +126,7 @@ const Zodiac = (props: Props) => {
                             <span className="my-3"></span>
                             
                     </FormControl>
-                    <button className='bg-blue-500 text-white font-semibold p-3 w-full rounded-md'  onClick={(event: React.MouseEvent<HTMLButtonElement>) => {handleClick(event); hClick()}}>{`${buttonLoading ? 'Checking...' : 'Check Compatibility'}`}</button>
+                    <button className='bg-blue-500 text-white font-semibold p-3 w-full rounded-md'  onClick={(event: React.MouseEvent<HTMLButtonElement>) => {handleClick(event)}}>{`${buttonLoading ? 'Checking...' : 'Check Compatibility'}`}</button>
                 </Box>
             </section>
             
