@@ -14,8 +14,8 @@ export default function Home() {
     <>
     <ModalProvider>
         <Head>
-          <title>Next.js Blog App</title>
-          <meta name="description" content="Performance Testing of Next.js App" />
+          <title>Love Compatibility Checker</title>
+          <meta name="description" content="Check yoour love compatability" />
           <meta name="viewport" content="width=device-width, initial-scale=1" />
           <link rel="icon" href="/favicon.ico" />
         </Head>
