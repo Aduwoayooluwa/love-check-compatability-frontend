@@ -38,6 +38,12 @@ const Zodiac = (props: Props) => {
         pZodiac: ""
     })
 
+    const [state, setState] = useState({
+        buttonLoader: false,
+        showConfetti: false
+    })
+
+
     const [buttonLoading, setButtonLoading] = useState(false)
 
     const [showConfetti, setShowConfetti] = useState(false)
@@ -53,10 +59,6 @@ const Zodiac = (props: Props) => {
         const { value, name } = e.target
         setInputField({...inputField, [name]: value})
     }
-    const hClick = () => {
-        setButtonLoading(true)
-    }
-
     const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault()
 
@@ -106,8 +108,6 @@ const Zodiac = (props: Props) => {
                 
             <div className='p-5 grid place-items-center shadow-none md:shadow border-none md:border w-full md:w-1/2'>
                 <p className='font-semibold text-xl mb-3'>Check your Love Compatibility</p>
-
-            <button onClick={hClick}>Click me abeg</button>
             <section className='flex items-center justify-evenly'>
                 <Box sx={{ width: "100%", maxWidth: '100%', flex:"inline"}}>
 
