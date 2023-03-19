@@ -7,6 +7,7 @@ import { ModalContext} from '@/context/ModalContext';
 import dynamic from 'next/dynamic';
 import useWindowSize from 'react-use/lib/useWindowSize'
 import Confetti from 'react-confetti'
+import { CircularProgress } from '@mui/material';
 
 type Props = {}
 
@@ -37,6 +38,8 @@ const Zodiac = (props: Props) => {
         pZodiac: ""
     })
 
+    const [buttonLoading, setButtonLoading] = useState(false)
+
     const [showConfetti, setShowConfetti] = useState(false)
 
     const mName = inputField.mName
@@ -50,13 +53,15 @@ const Zodiac = (props: Props) => {
         const { value, name } = e.target
         setInputField({...inputField, [name]: value})
     }
+    const hClick = () => {
+        setButtonLoading(true)
+    }
 
     const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-        console.log(inputField)
+        event.preventDefault()
 
         try {
                 return axios.get(url).then((response) => {
-                console.log(response)
                 setModalMessage(response.data.message)
                 setModalTitle(response.data.title)
                 setIsMessageOpen(true)
@@ -65,13 +70,11 @@ const Zodiac = (props: Props) => {
                 setPname(inputField.pName)
 
                 if (response.data.compatability === true) {
-                    console.log('status', response.data.compatability)
                     setShowConfetti(true)
                     return
                 }
 
                 else if (response.data.compatability === false) {
-                    console.log('status', response.data.compatability)
                     setShowConfetti(false)
                     return 
                 }
@@ -83,6 +86,9 @@ const Zodiac = (props: Props) => {
             setErrorTitle('')
             setIsErrorOpen(true)
             setIsModalOpen((prev: boolean) => !prev)
+        }
+        finally {
+            setButtonLoading(false)
         }
         
     }
@@ -101,6 +107,7 @@ const Zodiac = (props: Props) => {
             <div className='p-5 grid place-items-center shadow-none md:shadow border-none md:border w-full md:w-1/2'>
                 <p className='font-semibold text-xl mb-3'>Check your Love Compatibility</p>
 
+            <button onClick={hClick}>Click me abeg</button>
             <section className='flex items-center justify-evenly'>
                 <Box sx={{ width: "100%", maxWidth: '100%', flex:"inline"}}>
 
@@ -119,7 +126,7 @@ const Zodiac = (props: Props) => {
                             <span className="my-3"></span>
                             
                     </FormControl>
-                    <Button  onClick={(event: React.MouseEvent<HTMLButtonElement>) => handleClick(event)} variant='outlined' fullWidth>Check Compatibility</Button>
+                    <button className='bg-blue-500 text-white font-semibold p-3 w-full rounded-md'  onClick={(event: React.MouseEvent<HTMLButtonElement>) => {handleClick(event); hClick()}}>{`${buttonLoading ? 'Checking...' : 'Check Compatibility'}`}</button>
                 </Box>
             </section>
             
